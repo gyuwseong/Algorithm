@@ -1,5 +1,4 @@
 import sys
-import collections
 
 n = int(sys.stdin.readline().strip())
 m = int(sys.stdin.readline().strip())
@@ -11,19 +10,15 @@ for _ in range(m):
     graph[a][b] = True
     graph[b][a] = True
 
-bfs_visited = [False] * (n + 1)
+dfs_visited = [False] * (n + 1)
 
 
-def bfs(v):
-    q = collections.deque([v])
-    bfs_visited[v] = True
-    while q:
-        v = q.popleft()
-        for i in range(n + 1):
-            if not bfs_visited[i] and graph[v][i]:
-                q.append(i)
-                bfs_visited[i] = True
+def dfs(v):
+    dfs_visited[v] = True
+    for i in range(1, n + 1):
+        if not dfs_visited[i] and graph[v][i]:
+            dfs(i)
 
 
-bfs(1)
-print(bfs_visited.count(True) - 1)
+dfs(1)
+print(dfs_visited.count(True) - 1)
